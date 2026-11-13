@@ -14,7 +14,7 @@
 
   document.getElementById("open-editor").addEventListener("click", async () => {
     const url = browser.runtime.getURL(
-      `editor/editor.html?tabId=${tab.id}&host=${encodeURIComponent(hostname)}`
+      `/editor/editor.html?tabId=${tab.id}&host=${encodeURIComponent(hostname)}`
     );
     await browser.windows.create({ url, type: "popup", width: 560, height: 720 });
     window.close();
