@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Custom CSS Injector",
+  "version": "0.1",
+  "description": "CSS Injection Utility with a modern UI",
+
+  "permissions": ["storage", "scripting", "activeTab"],
+  "host_permissions": ["<all_urls>"],
+
+  "background": {
+    "scripts": ["background.js"]
+  }
+}
