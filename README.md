@@ -9,6 +9,21 @@ A Custom CSS Injection Extension for Firefox.
 
 ---
 
+## Development
+
+**Installing the Extension for Development:**
+
+Go to [this page](about:debugging#/runtime/this-firefox), click on "Load Temporary Add-on..." and select the manifest.json inside of this Folder.
+
+**Reloading the Extension:**
+
+Rebuild:
+
+```sh
+npm run build
+```
+
+Then, go to [this page](about:debugging#/runtime/this-firefox) and click on reload below the "Custom CSS Injector" addon.
 
 ## Credits
 

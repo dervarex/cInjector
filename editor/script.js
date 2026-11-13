@@ -68,7 +68,8 @@ function apply(css) {
 }
 
 function markAsUnsaved() {
-  if (getCss() !== savedCss) setState("unsaed changes", "warn");
+  if (getCss() !== savedCss) setState("Unsaved Changes", "warn")
+    else setState();
 }
 
 let timer;
