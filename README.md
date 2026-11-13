@@ -8,3 +8,8 @@
 A Custom CSS Injection Extension for Firefox.
 
 ---
+
+
+## Credits
+
+For the Editor, I used [CodeMirror 6](https://codemirror.net/) so it feels like it's an actual editor.

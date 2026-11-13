@@ -1,10 +1,16 @@
+import { EditorView, basicSetup } from "codemirror";
+import { keymap } from "@codemirror/view";
+import { indentWithTab } from "@codemirror/commands";
+import { syntaxHighlighting } from "@codemirror/language";
+import { css } from "@codemirror/lang-css";
+import { oneDarkHighlightStyle } from "@codemirror/theme-one-dark";
+
 const params = new URLSearchParams(location.search);
 const tabId = Number(params.get("tabId"));
 const hostname = params.get("host");
 const key = `css:${hostname}`;
 const editingKey = `editing:${tabId}`;
 
-const textarea = document.getElementById("css");
 const saveButton = document.getElementById("save");
 const statusEl = document.getElementById("status");
 
@@ -22,7 +28,22 @@ let savedCss = stored;
 let appliedCss = stored;
 let isTabAlive = true;
 
-textarea.value = stored;
+const view = new EditorView({
+  doc: stored,
+  parent: document.getElementById("editor"),
+  extensions: [
+    basicSetup,
+    keymap.of([indentWithTab]),
+    css(),
+    syntaxHighlighting(oneDarkHighlightStyle),
+    EditorView.theme({}, { dark: true }),
+    EditorView.updateListener.of((update) => {
+      if (update.docChanged) onChange();
+    }),
+  ],
+});
+
+const getCss = () => view.state.doc.toString();
 
 await browser.storage.session.set({ [editingKey]: hostname });
 
@@ -47,26 +68,18 @@ function apply(css) {
 }
 
 function markAsUnsaved() {
-  if (textarea.value !== savedCss) setState("unsaed changes", "warn");
+  if (getCss() !== savedCss) setState("unsaed changes", "warn");
 }
 
 let timer;
-textarea.addEventListener("input", () => {
+function onChange() {
   markAsUnsaved();
   clearTimeout(timer);
-  timer = setTimeout(() => apply(textarea.value), 150);
-});
-
-textarea.addEventListener("keydown", (e) => {
-  if (e.key === "Tab" && !e.shiftKey) {
-    e.preventDefault();
-    textarea.setRangeText("  ", textarea.selectionStart, textarea.selectionEnd, "end");
-    textarea.dispatchEvent(new Event("input"));
-  }
-});
+  timer = setTimeout(() => apply(getCss()), 150);
+}
 
 async function save() {
-  const css = textarea.value;
+  const css = getCss();
   await browser.storage.local.set({ [key]: css });
   savedCss = css;
   apply(css);
@@ -96,7 +109,7 @@ browser.tabs.onUpdated.addListener((id, changeInfo, tab) => {
   }
   isTabAlive = true;
   appliedCss = "";
-  apply(textarea.value);
+  apply(getCss());
 });
 
 browser.tabs.onRemoved.addListener((id) => {
@@ -106,7 +119,7 @@ browser.tabs.onRemoved.addListener((id) => {
 });
 
 window.addEventListener("beforeunload", (e) => {
-  if (textarea.value !== savedCss) e.preventDefault();
+  if (getCss() !== savedCss) e.preventDefault();
 });
 
 window.addEventListener("pagehide", () => {
@@ -119,4 +132,4 @@ window.addEventListener("pagehide", () => {
 });
 
 markAsUnsaved();
-textarea.focus();
+view.focus();
