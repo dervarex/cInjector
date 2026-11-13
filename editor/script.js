@@ -1,9 +1,8 @@
 import { EditorView, basicSetup } from "codemirror";
 import { keymap } from "@codemirror/view";
 import { indentWithTab } from "@codemirror/commands";
-import { syntaxHighlighting } from "@codemirror/language";
 import { css } from "@codemirror/lang-css";
-import { oneDarkHighlightStyle } from "@codemirror/theme-one-dark";
+import { theme } from "./theme.js";
 
 const params = new URLSearchParams(location.search);
 const tabId = Number(params.get("tabId"));
@@ -38,8 +37,7 @@ const view = new EditorView({
       { key: "Mod-s", preventDefault: true, run: () => (save(), true) },
     ]),
     css(),
-    syntaxHighlighting(oneDarkHighlightStyle),
-    EditorView.theme({}, { dark: true }),
+    theme,
     EditorView.updateListener.of((update) => {
       if (update.docChanged) onChange();
     }),
@@ -125,7 +123,7 @@ async function save() {
   markAsUnsaved();
 }
 
-saveButton.addEventListener("click", save);
+saveButton?.addEventListener("click", save);
 document.addEventListener("keydown", (e) => {
   if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s" && !e.defaultPrevented) {
     e.preventDefault();

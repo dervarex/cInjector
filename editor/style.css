@@ -120,31 +120,6 @@ button:disabled {
   gap: 6px;
 }
 
-.cm-editor {
-  height: 100%;
-  background: var(--bg);
-  color: var(--text);
-  font: 13px/1.5 ui-monospace, "JetBrains Mono", monospace;
-}
-
-.cm-editor.cm-focused {
-  outline: none;
-}
-
-.cm-gutters {
-  background: var(--bg);
-  color: var(--muted);
-  border: 0;
-}
-
-.cm-content {
-  caret-color: var(--text);
-}
-
-.cm-cursor {
-  border-left-color: var(--text);
-}
-
 [hidden] {
   display: none !important;
 }

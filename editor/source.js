@@ -1,8 +1,7 @@
 import { EditorView, basicSetup } from "codemirror";
 import { EditorState } from "@codemirror/state";
-import { syntaxHighlighting } from "@codemirror/language";
 import { html } from "@codemirror/lang-html";
-import { oneDarkHighlightStyle } from "@codemirror/theme-one-dark";
+import { theme } from "./theme.js";
 
 const params = new URLSearchParams(location.search);
 const tabId = Number(params.get("tabId"));
@@ -24,8 +23,7 @@ const view = new EditorView({
     basicSetup,
     EditorState.readOnly.of(true),
     html(),
-    syntaxHighlighting(oneDarkHighlightStyle),
-    EditorView.theme({}, { dark: true }),
+    theme,
   ],
 });
 
