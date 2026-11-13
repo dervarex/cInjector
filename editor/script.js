@@ -48,6 +48,41 @@ const view = new EditorView({
 
 const getCss = () => view.state.doc.toString();
 
+const editorEl = document.getElementById("editor");
+const sourceFrame = document.getElementById("source-frame");
+const tabButtons = document.querySelectorAll(".tabs .tab");
+
+function showTab(name) {
+  for (const button of tabButtons) {
+    button.classList.toggle("active", button.dataset.tab === name);
+  }
+  editorEl.hidden = name !== "css";
+  sourceFrame.hidden = name !== "source";
+
+  if (name === "css") {
+    view.focus();
+  } else if (!sourceFrame.src) {
+    sourceFrame.src = `source.html${location.search}`;
+  } else {
+    sourceFrame.contentWindow.postMessage({ type: "refresh" }, location.origin);
+  }
+}
+
+for (const button of tabButtons) {
+  button.addEventListener("click", () => showTab(button.dataset.tab));
+}
+
+document.getElementById("pop-out-source").addEventListener("click", async () => {
+  const url = browser.runtime.getURL(`editor/source.html${location.search}`);
+  await browser.windows.create({ url, type: "popup", width: 800, height: 800 });
+  if (!sourceFrame.hidden) showTab("css");
+});
+
+window.addEventListener("message", (e) => {
+  if (e.origin !== location.origin) return;
+  if (e.data?.type === "save") save();
+});
+
 await browser.storage.session.set({ [editingKey]: hostname });
 
 let queue = Promise.resolve();
