@@ -29,9 +29,22 @@ header {
   background: var(--panel);
 }
 
-.site { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.label { color: var(--muted); margin-right: 6px; }
-#domain { font-weight: 600; }
+.site {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.label {
+    color: var(--muted);
+    margin-right: 6px;
+}
+
+#domain {
+    font-weight: 600;
+}
 
 #status { color: var(--muted); }
 #status.ok { color: var(--ok); }
@@ -47,7 +60,10 @@ button {
   font: inherit;
   cursor: pointer;
 }
-button:disabled { opacity: 0.4; cursor: default; }
+
+button:disabled {
+   opacity: 0.4; cursor: default;
+}
 
 textarea {
   flex: 1;

@@ -1,5 +1,28 @@
-body { font: 13px system-ui, sans-serif; width: 320px; padding: 10px; }
-textarea { width: 100%; height: 160px; font-family: monospace; font-size: 12px; box-sizing: border-box; }
-button { margin-top: 8px; padding: 6px 12px; }
-#status { margin-top: 6px; color: #2a2; min-height: 1em; }
-#domain { font-weight: bold; }
+:root {
+  --bg: #1e1f24;
+  --text: #E1D8CC;
+  --accent: #FF6000;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font: 13px system-ui, sans-serif;
+    width: 320px;
+    padding: 10px;
+}
+
+button {
+  margin-top: 10px;
+  padding: 6px 14px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--accent);
+  color: white;
+  font: inherit;
+  cursor: pointer;
+}
+
+#domain {
+    font-weight: bold;
+}
