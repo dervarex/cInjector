@@ -86,14 +86,14 @@ button:disabled {
 .tabs .tab {
   padding: 6px 14px;
   border-radius: 0;
-  border-bottom: 2px solid transparent;
   background: transparent;
   color: var(--muted);
 }
 
 .tabs .tab.active {
   color: var(--text);
-  border-bottom-color: var(--accent);
+  background: var(--bg);
+  border-radius: 5px 5px 0 0;
 }
 
 .icon-button {
