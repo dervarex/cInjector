@@ -33,7 +33,10 @@ const view = new EditorView({
   parent: document.getElementById("editor"),
   extensions: [
     basicSetup,
-    keymap.of([indentWithTab]),
+    keymap.of([
+      indentWithTab,
+      { key: "Mod-s", preventDefault: true, run: () => (save(), true) },
+    ]),
     css(),
     syntaxHighlighting(oneDarkHighlightStyle),
     EditorView.theme({}, { dark: true }),
@@ -89,7 +92,7 @@ async function save() {
 
 saveButton.addEventListener("click", save);
 document.addEventListener("keydown", (e) => {
-  if ((e.ctrlKey || e.metaKey) && e.key === "s") {
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s" && !e.defaultPrevented) {
     e.preventDefault();
     save();
   }
