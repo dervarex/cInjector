@@ -13,9 +13,6 @@ A Custom CSS Injection Extension for Firefox.
 ## Screenshots
 
 <p align="center">
-  <img width="1000" src="screenshots/screenshot-3.png" alt="google.com in pure black next to the CSS editor">
-</p>
-<p align="center">
   <img width="1000" src="screenshots/screenshot-1.png" alt="CSS editor next to google.com, with a rule that makes the background black">
 </p>
 <p align="center">
