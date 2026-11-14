@@ -13,6 +13,7 @@ A Custom CSS Injection Extension for Firefox.
 
 <img width="1000" src="screenshots/screenshot-1.png" alt="Screenshot 1">
 <img width="500" src="screenshots/screenshot-2.png" alt="Screenshot 2">
+<img width="1000" style="display:block;margin:auto;width:50%;" src="screenshots/screenshot-3.png" alt="Screenshot 3">
 
 ## Development
 
