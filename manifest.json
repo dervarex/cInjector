@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Custom CSS Injector",
   "version": "0.2",
-  "description": "CSS Injection Utility with a modern UI",
+  "description": "A Simplistic CSS Injection Extension for Firefox",
   "icons": { "48": "logo.svg", "96": "logo.svg" },
 
   "permissions": ["storage", "scripting", "activeTab"],
