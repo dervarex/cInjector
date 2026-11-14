@@ -3,6 +3,7 @@ import { EditorState } from "@codemirror/state";
 import { html } from "@codemirror/lang-html";
 import beautify from "js-beautify";
 import { theme } from "./theme.js";
+import { rememberScroll } from "./scroll.js";
 
 const params = new URLSearchParams(location.search);
 const tabId = Number(params.get("tabId"));
@@ -28,6 +29,8 @@ const view = new EditorView({
   ],
 });
 
+const restoreScroll = rememberScroll(view);
+
 async function refresh() {
   try {
     const [{ result }] = await browser.scripting.executeScript({
@@ -39,7 +42,10 @@ async function refresh() {
       max_preserve_newlines: 1,
       wrap_line_length: 0,
     });
-    view.dispatch({ changes: { from: 0, to: view.state.doc.length, insert: formatted } });
+    if (formatted !== view.state.doc.toString()) {
+      view.dispatch({ changes: { from: 0, to: view.state.doc.length, insert: formatted } });
+      restoreScroll();
+    }
     setState();
   } catch (err) {
     setState("Error: " + err.message, "err");

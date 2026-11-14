@@ -54,8 +54,8 @@ function showTab(name) {
   for (const button of tabButtons) {
     button.classList.toggle("active", button.dataset.tab === name);
   }
-  editorEl.hidden = name !== "css";
-  sourceFrame.hidden = name !== "source";
+  editorEl.classList.toggle("inactive", name !== "css");
+  sourceFrame.classList.toggle("inactive", name !== "source");
 
   if (name === "css") {
     view.focus();
@@ -73,7 +73,7 @@ for (const button of tabButtons) {
 document.getElementById("pop-out-source").addEventListener("click", async () => {
   const url = browser.runtime.getURL(`editor/source.html${location.search}`);
   await browser.windows.create({ url, type: "popup", width: 800, height: 800 });
-  if (!sourceFrame.hidden) showTab("css");
+  if (!sourceFrame.classList.contains("inactive")) showTab("css");
 });
 
 window.addEventListener("message", (e) => {

@@ -65,15 +65,29 @@ button:disabled {
    opacity: 0.4; cursor: default;
 }
 
-#editor,
-#source,
-#source-frame {
+#source {
   flex: 1;
   min-height: 0;
 }
 
-#source-frame {
+#panes {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+#panes > * {
+  position: absolute;
+  inset: 0;
   width: 100%;
+  height: 100%;
+}
+
+#panes > .inactive {
+  visibility: hidden;
+}
+
+#source-frame {
   border: 0;
 }
 
