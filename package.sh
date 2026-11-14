@@ -10,7 +10,7 @@ fi
 
 IGNORE=(
   "screenshots" "screenshots/**" "examples" "examples/**"
-  "README.md" "package.json" "package-lock.json" "package.sh"
+  "README.md" "package.json" "package-lock.json" "package.sh" "amo-metadata.json"
 )
 
 rm -rf editor/dist
@@ -24,5 +24,6 @@ if [[ "${SIGN:-1}" == 1 && -n "${jwt_issuer:-}" && -n "${jwt_secret:-}" ]]; then
     --channel="${CHANNEL:-unlisted}" \
     --api-key="$jwt_issuer" --api-secret="$jwt_secret" \
     --upload-source-code=web-ext-artifacts/source.zip \
+    --amo-metadata=amo-metadata.json \
     --ignore-files "${IGNORE[@]}"
 fi

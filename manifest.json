@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Custom CSS Injector",
-  "version": "0.2",
+  "version": "0.3",
   "description": "A Simplistic CSS Injection Extension for Firefox",
   "icons": { "48": "logo.svg", "96": "logo.svg" },
 
@@ -19,6 +19,7 @@
   "browser_specific_settings": {
     "gecko": {
       "id": "cinjector@dervarex",
+      "strict_min_version": "140.0",
       "data_collection_permissions": { "required": ["none"] }
     }
   }
