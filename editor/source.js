@@ -1,6 +1,7 @@
 import { EditorView, basicSetup } from "codemirror";
 import { EditorState } from "@codemirror/state";
 import { html } from "@codemirror/lang-html";
+import { openSearchPanel, closeSearchPanel, searchPanelOpen } from "@codemirror/search";
 import beautify from "js-beautify";
 import { theme } from "./theme.js";
 import { rememberScroll } from "./scroll.js";
@@ -53,6 +54,11 @@ async function refresh() {
 }
 
 document.getElementById("refresh").addEventListener("click", refresh);
+
+document.getElementById("search").addEventListener("click", () => {
+  if (searchPanelOpen(view.state)) closeSearchPanel(view);
+  else openSearchPanel(view);
+});
 
 window.addEventListener("message", (e) => {
   if (e.origin === location.origin && e.data?.type === "refresh") refresh();

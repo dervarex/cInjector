@@ -89,11 +89,11 @@ function apply(css) {
     if (!isTabAlive || css === appliedCss) return;
     try {
       if (appliedCss) {
-        await browser.scripting.removeCSS({ target: { tabId }, css: appliedCss, origin: "USER" });
+        await browser.scripting.removeCSS({ target: { tabId }, css: appliedCss, origin: "AUTHOR" });
         appliedCss = "";
       }
       if (css) {
-        await browser.scripting.insertCSS({ target: { tabId }, css, origin: "USER" });
+        await browser.scripting.insertCSS({ target: { tabId }, css, origin: "AUTHOR" });
         appliedCss = css;
       }
       markAsUnsaved();

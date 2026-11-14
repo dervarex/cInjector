@@ -25,7 +25,7 @@ browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     await browser.scripting.insertCSS({
       target: { tabId },
       css,
-      origin: "USER",
+      origin: "AUTHOR",
     });
   } catch (err) {
     console.error("insertCSS errored:", err);
@@ -47,10 +47,10 @@ browser.runtime.onMessage.addListener(async (msg) => {
 
   try {
     if (msg.preview) {
-      await browser.scripting.removeCSS({ target: { tabId: msg.tabId }, css: msg.preview, origin: "USER" });
+      await browser.scripting.removeCSS({ target: { tabId: msg.tabId }, css: msg.preview, origin: "AUTHOR" });
     }
     if (saved) {
-      await browser.scripting.insertCSS({ target: { tabId: msg.tabId }, css: saved, origin: "USER" });
+      await browser.scripting.insertCSS({ target: { tabId: msg.tabId }, css: saved, origin: "AUTHOR" });
     }
   } catch (err) {
     console.error("restoring css errored:", err);
