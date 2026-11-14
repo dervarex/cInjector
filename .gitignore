@@ -1,3 +1,5 @@
 node_modules/
 editor/dist/
-package-lock.json
+web-ext-artifacts/
+.env
+.amo-upload-uuid
