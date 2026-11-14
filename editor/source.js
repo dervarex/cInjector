@@ -5,6 +5,7 @@ import { openSearchPanel, closeSearchPanel, searchPanelOpen } from "@codemirror/
 import beautify from "js-beautify";
 import { theme } from "./theme.js";
 import { rememberScroll } from "./scroll.js";
+import { pickElement, cancelPick, isPicking } from "./pick.js";
 
 const params = new URLSearchParams(location.search);
 const tabId = Number(params.get("tabId"));
@@ -32,21 +33,62 @@ const view = new EditorView({
 
 const restoreScroll = rememberScroll(view);
 
+const MARKER = "data-cinjector-pick";
+
+async function loadSource(takeMarker = false) {
+  const [{ result }] = await browser.scripting.executeScript({
+    target: { tabId },
+    args: [MARKER, takeMarker],
+    func: (marker, takeMarker) => {
+      const source = document.documentElement.outerHTML;
+      if (takeMarker) {
+        for (const el of document.querySelectorAll(`[${marker}]`)) el.removeAttribute(marker);
+      }
+      return source;
+    },
+  });
+  return beautify.html(result, {
+    indent_size: 2,
+    max_preserve_newlines: 1,
+    wrap_line_length: 0,
+  });
+}
+
+function setSource(text) {
+  if (text === view.state.doc.toString()) return false;
+  view.dispatch({ changes: { from: 0, to: view.state.doc.length, insert: text } });
+  return true;
+}
+
 async function refresh() {
   try {
-    const [{ result }] = await browser.scripting.executeScript({
-      target: { tabId },
-      func: () => document.documentElement.outerHTML,
-    });
-    const formatted = beautify.html(result, {
-      indent_size: 2,
-      max_preserve_newlines: 1,
-      wrap_line_length: 0,
-    });
-    if (formatted !== view.state.doc.toString()) {
-      view.dispatch({ changes: { from: 0, to: view.state.doc.length, insert: formatted } });
-      restoreScroll();
+    if (setSource(await loadSource())) restoreScroll();
+    setState();
+  } catch (err) {
+    setState("Error: " + err.message, "err");
+  }
+}
+
+async function showPicked() {
+  try {
+    let text = await loadSource(true);
+    const attribute = ` ${MARKER}=""`;
+    const index = text.indexOf(attribute);
+    if (index === -1) {
+      setState("Element not found in source", "warn");
+      return;
     }
+    text = text.slice(0, index) + text.slice(index + attribute.length);
+    setSource(text);
+
+    const from = text.lastIndexOf("<", index);
+    const end = text.indexOf(">", index);
+    const to = end === -1 ? index : end + 1;
+    view.dispatch({
+      selection: { anchor: from, head: to },
+      effects: EditorView.scrollIntoView(from, { y: "center" }),
+    });
+    view.focus();
     setState();
   } catch (err) {
     setState("Error: " + err.message, "err");
@@ -58,6 +100,24 @@ document.getElementById("refresh").addEventListener("click", refresh);
 document.getElementById("search").addEventListener("click", () => {
   if (searchPanelOpen(view.state)) closeSearchPanel(view);
   else openSearchPanel(view);
+});
+
+const pickButton = document.getElementById("pick");
+
+pickButton.addEventListener("click", async () => {
+  try {
+    if (isPicking()) {
+      await cancelPick();
+      setState();
+      return;
+    }
+    setState("Click an element on the page");
+    const picked = await pickElement(tabId, pickButton);
+    setState();
+    if (picked) showPicked();
+  } catch (err) {
+    setState("Error: " + err.message, "err");
+  }
 });
 
 window.addEventListener("message", (e) => {
