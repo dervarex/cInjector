@@ -1,6 +1,7 @@
 import { EditorView, basicSetup } from "codemirror";
 import { EditorState } from "@codemirror/state";
 import { html } from "@codemirror/lang-html";
+import beautify from "js-beautify";
 import { theme } from "./theme.js";
 
 const params = new URLSearchParams(location.search);
@@ -33,7 +34,12 @@ async function refresh() {
       target: { tabId },
       func: () => document.documentElement.outerHTML,
     });
-    view.dispatch({ changes: { from: 0, to: view.state.doc.length, insert: result } });
+    const formatted = beautify.html(result, {
+      indent_size: 2,
+      max_preserve_newlines: 1,
+      wrap_line_length: 0,
+    });
+    view.dispatch({ changes: { from: 0, to: view.state.doc.length, insert: formatted } });
     setState();
   } catch (err) {
     setState("Error: " + err.message, "err");
