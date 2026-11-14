@@ -9,10 +9,18 @@ A Custom CSS Injection Extension for Firefox.
 
 ---
 
+
 ## Screenshots
 
-<img width="500" style="display:block;margin:auto;" src="screenshots/screenshot-1.png" alt="Screenshot 1">
-<img width="1000" src="screenshots/screenshot-2.png" alt="Screenshot 2">
+<p align="center">
+  <img width="1000" src="screenshots/screenshot-3.png" alt="google.com in pure black next to the CSS editor">
+</p>
+<p align="center">
+  <img width="1000" src="screenshots/screenshot-1.png" alt="CSS editor next to google.com, with a rule that makes the background black">
+</p>
+<p align="center">
+  <img width="500" src="screenshots/screenshot-2.png" alt="Formatted HTML source of example.com in the Source tab">
+</p>
 
 ## Development
 
