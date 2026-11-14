@@ -1,0 +1,247 @@
+/*google.com
+makes it oled mode (pure #000000) and removes some (in my opinion) unneccesary buttons
+also adds animations
+*/
+
+body, .SDkEP, .aajZCb, .g55egf.xQQEXb, .O3yKUb {
+  background: #000000;
+}
+
+.WwJHVc.MGe1Ac,
+button:has(.u4Uk3c) {
+  background-color: #000000 !important;
+}
+
+.WwJHVc.MGe1Ac .bvUkz,
+button:has(.u4Uk3c) .bvUkz {
+  background-color: #000000 !important;
+}
+
+.u4Uk3c .lTxWLe {
+  color: #ffffff !important;
+}
+
+.u4Uk3c .PD3zdc,
+.u4Uk3c svg,
+.u4Uk3c svg path {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+
+.WwJHVc.MGe1Ac:hover,
+.WwJHVc.MGe1Ac:active,
+button:has(.u4Uk3c):hover,
+button:has(.u4Uk3c):active {
+  background-color: #000000 !important;
+}
+
+.gNO89b {
+  background: #000000;
+}
+
+.FPdoLc.T14B5e > center > .gNO89b {
+  background: #141414;
+  border-color: #141414;
+}
+
+input[name="btnK"],
+input[name="btnI"] {
+  background: #141414 !important;
+  border-color: #141414 !important;
+}
+
+/*Unneccesary Buttons*/
+
+/* google services button or smth, only if you want to quickly get to gmail or drive from there*/
+.gb_D > .gb_C {
+  display: none;
+}
+
+/*gmail button*/
+div.gb_9.gb_aa:nth-of-type(1) > .gb_8 {
+  display:none;
+}
+
+/*images button*/
+div.gb_9.gb_aa:nth-of-type(2) > .gb_8 {
+  display:none;
+}
+
+/*about button*/
+a.w5hRs:nth-of-type(1) {
+  display:none;
+}
+
+/*store button*/
+a.w5hRs:nth-of-type(2) {
+  display:none;
+}
+
+/*footer*/
+.g55egf.xQQEXb {
+  display:none;
+}
+
+/*Country name*/
+.O3yKUb {
+  display:none
+}
+
+/*google offered in: button*/
+#SIvCob {
+  display:none;
+}
+
+/*google search and I'm feeling lucky*/
+.FPdoLc.T14B5e > center {
+  display:none;
+}
+.eemHY.T14B5e > center {
+  display:none;
+}
+
+/*mic button*/
+.fzj3ad {
+  display:none;
+}
+
+/*search by image button*/
+.hWdRGb {
+  display:none;
+}
+
+/*ai mode button*/
+.bvUkz {
+  display:none;
+}
+
+.lTxWLe {
+  display:none;
+}
+
+.PD3zdc.L0nkUd > svg {
+  display:none;
+}
+/*account button*/
+.gb_C.gb_bb {
+  display:none;
+}
+
+/*learn more button in the suggestions*/
+.lh87ke {
+  display:none;
+}
+
+/*report inappropiate predictions*/
+.VfL2Y.LRZwuc {
+  display:none;
+}
+
+/*extra space below suggestions*/
+.eemHY.T14B5e {
+  display:none;
+}
+
+
+/* animations*/
+
+@keyframes ci-fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes ci-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes ci-drop {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/*load*/
+.uZekje { animation: ci-fade-up .6s cubic-bezier(.2, .8, .2, 1) both; }
+.RNNXgb { animation: ci-fade-up .6s .1s cubic-bezier(.2, .8, .2, 1) both; }
+.CoM3Df { animation: ci-fade-in .8s .3s both; }
+
+/*search box*/
+.RNNXgb {
+  transition: border-color .25s ease, box-shadow .35s ease, border-radius .15s ease !important;
+}
+.RNNXgb:hover {
+  border-color: #3a3a3a !important;
+}
+.sbfc .RNNXgb {
+  border-color: #5a5a5a !important;
+  box-shadow: 0 0 22px rgba(255, 255, 255, .07) !important;
+}
+
+/* suggestions*/
+.UUbT9 { animation: ci-drop .18s ease-out both; }
+li.sbct {
+  transition: background-color .15s ease;
+}
+
+/* buttons */
+button.plR5qb,
+.UbbAWe,
+input[name="btnK"],
+input[name="btnI"] {
+  transition: transform .15s ease, background-color .2s ease, filter .2s ease !important;
+}
+button.plR5qb:hover,
+.UbbAWe:hover,
+input[name="btnK"]:hover,
+input[name="btnI"]:hover {
+  filter: brightness(1.4);
+}
+button.plR5qb:active,
+.UbbAWe:active,
+input[name="btnK"]:active,
+input[name="btnI"]:active {
+  transform: scale(.95);
+}
+
+/* account avatar */
+.gb_C.gb_bb {
+  transition: transform .2s ease;
+}
+.gb_C.gb_bb:hover {
+  transform: scale(1.08);
+}
+
+/* reduce motion setting if browser has that toggled on */
+@media (prefers-reduced-motion: reduce) {
+  .uZekje, .RNNXgb, .CoM3Df, .UUbT9 { animation: none !important; }
+  .RNNXgb, li.sbct, button.plR5qb, .UbbAWe,
+  input[name="btnK"], input[name="btnI"], .gb_C.gb_bb { transition: none !important; }
+}
+
+.uZekje { animation: ci-fade-up .6s cubic-bezier(.2, .8, .2, 1) backwards; }
+.RNNXgb { animation: ci-fade-up .6s .1s cubic-bezier(.2, .8, .2, 1) backwards; }
+.CoM3Df { animation: ci-fade-in .8s .3s backwards; }
+
+.UUbT9 { animation: ci-drop .18s ease-out backwards; }
+
+/*fixing some issues*/
+.RNNXgb {
+  background: #000 !important;
+}
+:root, .NMq1me, .DBd2Wb, .AgWCw, .uZp6vc {
+  --xhUGwc: #000 !important;
+}
+.RDmXvc {
+  background-image: linear-gradient(transparent 0, #000000e6 52px, #000 80px) !important;
+}
+.rq1a2, .iMHp6c {
+  background-color: #000 !important;
+  border-color: #222 !important;
+}
+
+div.WYczDe:nth-of-type(2) > .Z1qcYe > .BpxUDf.aiModeUiCodeBlock__Container > div > .rq1a2 > .a2TNg {
+  display:none;
+}
+
+/*hide footer*/
+#fbar {
+  display:none;
+}
