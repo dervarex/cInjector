@@ -3,6 +3,7 @@ import { keymap } from "@codemirror/view";
 import { indentWithTab } from "@codemirror/commands";
 import { css } from "@codemirror/lang-css";
 import { theme } from "./theme.js";
+import { pickElement, cancelPick, isPicking } from "./pick.js";
 
 const params = new URLSearchParams(location.search);
 const tabId = Number(params.get("tabId"));
@@ -74,6 +75,50 @@ document.getElementById("pop-out-source").addEventListener("click", async () => 
   const url = browser.runtime.getURL(`editor/source.html${location.search}`);
   await browser.windows.create({ url, type: "popup", width: 800, height: 800 });
   if (!sourceFrame.classList.contains("inactive")) showTab("css");
+});
+
+function addRule(selector) {
+  const doc = view.state.doc.toString();
+  const separator = doc.trim() === "" ? "" : doc.endsWith("\n\n") ? "" : doc.endsWith("\n") ? "\n" : "\n\n";
+  const from = doc.trim() === "" ? 0 : doc.length;
+  const rule = `${separator}${selector} {\n  \n}\n`;
+  const cursor = from + separator.length + selector.length + 5;
+  view.dispatch({
+    changes: { from, to: doc.trim() === "" ? doc.length : from, insert: rule },
+    selection: { anchor: cursor },
+    scrollIntoView: true,
+  });
+}
+
+const pickElementButton = document.getElementById("pick-element");
+
+pickElementButton.addEventListener("click", async () => {
+  try {
+    if (isPicking()) {
+      await cancelPick();
+      markAsUnsaved();
+      return;
+    }
+    showTab("css");
+    setState("Click an element on the page");
+    const picked = await pickElement(tabId, pickElementButton);
+    markAsUnsaved();
+    if (!picked?.selector) return;
+    await browser.scripting.executeScript({
+      target: { tabId },
+      func: () => {
+        for (const el of document.querySelectorAll("[data-cinjector-pick]")) {
+          el.removeAttribute("data-cinjector-pick");
+        }
+      },
+    });
+    addRule(picked.selector);
+    const win = await browser.windows.getCurrent();
+    await browser.windows.update(win.id, { focused: true });
+    view.focus();
+  } catch (err) {
+    setState("Error: " + err.message, "err");
+  }
 });
 
 window.addEventListener("message", (e) => {

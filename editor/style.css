@@ -124,6 +124,14 @@ button:disabled {
   color: var(--text);
 }
 
+#pick-element {
+  margin-left: auto;
+}
+
+.icon-button.active {
+  color: var(--accent);
+}
+
 .corner {
   position: fixed;
   top: 6px;
