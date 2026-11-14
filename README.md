@@ -9,6 +9,11 @@ A Custom CSS Injection Extension for Firefox.
 
 ---
 
+## Screenshots
+
+<img width="1000" src="screenshots/screenshot-1.png" alt="Screenshot 1">
+<img width="500" src="screenshots/screenshot-2.png" alt="Screenshot 2">
+
 ## Development
 
 **Installing the Extension for Development:**
