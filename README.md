@@ -3,6 +3,9 @@
   <img width="150" src="logo.svg" alt="cInjector Logo"> 
   <br>
   <p align="center">cInjector</p>
+  <a href="https://addons.mozilla.org/de/firefox/addon/cinjector/">
+    <img alt="Mozilla Add-on Version" src="https://img.shields.io/amo/v/cinjector%40dervarex?label=cInjector%20Extension&link=https%3A%2F%2Faddons.mozilla.org%2Fde%2Ffirefox%2Faddon%2Fcinjector%2F">
+  </a>
 </h1>
 
 A Custom CSS Injection Extension for Firefox.
